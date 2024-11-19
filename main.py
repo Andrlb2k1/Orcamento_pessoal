@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import Tk, ttk
 
+# Importando Pillow
+from PIL import Image, ImageTk
+
 # Cores
 co0 = "#2e2d2b"  # preta
 co1 = "#feffff"  # branca
@@ -34,5 +37,14 @@ frameMeio.grid(row=1, column=0, pady=1, padx=0, sticky=NSEW)
 
 frameBaixo = Frame(janela, width=1043, height=300, bg=co1, relief="flat")
 frameBaixo.grid(row=2, column=0, pady=0, padx=10, sticky=NSEW)
+
+# Trabalhando no frame de cima
+# Acessando a imagem
+app_img = Image.open('log.png')
+app_img = app_img.resize((45, 45))
+app_img = ImageTk.PhotoImage(app_img)
+
+app_logo = Label(frameCima, image=app_img, text=" Orçamento pessoal", width=900, compound=LEFT, padx=5, relief=RAISED, anchor=NW, font=('Verdana 20 bold'), bg=co1, fg=co4)
+app_logo.place(x=0, y=0)
 
 janela.mainloop()

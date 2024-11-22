@@ -67,7 +67,7 @@ app_logo.place(x=0, y=0)
 # Definindo tree como global --------------------------------------------
 global tree
 
-# Função inserir categoria ----------------------------------------------
+# Função para inserir categoria ----------------------------------------------
 def inserir_categoria_b():
     nome = e_categoria.get()
     
@@ -78,7 +78,7 @@ def inserir_categoria_b():
               messagebox.showerror('Erro', 'Preencha todos os campos')
               return
     
-	# Passando para a função inserir gastos presente na view
+	# Passando para a função inserir categoria presente na view
     inserir_categoria(lista_inserir)
     
     messagebox.showinfo('Sucesso', 'Os dados foram inseridos com sucesso')
@@ -94,6 +94,34 @@ def inserir_categoria_b():
     
 	# Atualizando a lista de categorias
     combo_categoria_despesas['values'] = (categoria)
+
+# Função para inserir receitas ------------------------------------------------
+def inserir_receitas_b():
+	nome = 'Receita'
+	data = e_cal_receitas.get()
+	quantia = e_valor_receitas.get()
+
+	lista_inserir = [nome, data, quantia]
+
+	for i in lista_inserir:
+		if i == '':
+			messagebox.showerror('Erro', 'Preencha todos os campos')
+			return
+	
+	# Chamando a função inserir receitas presente na view
+	inserir_receita(lista_inserir)
+
+	messagebox.showinfo('Sucesso', 'Os dados foram inseridos com sucesso')
+
+	e_cal_receitas.delete(0, 'end')
+	e_valor_receitas.delete(0, 'end')
+
+	# Atualizando dados
+	mostrar_renda()
+	porcentagem()
+	grafico_bar()
+	resumo()
+	grafico_pie()
 
 # Porcentagem -----------------------------------------------------------
 def porcentagem():
@@ -336,7 +364,7 @@ img_add_receitas = Image.open('add.png')
 img_add_receitas = img_add_receitas.resize((17, 17))
 img_add_receitas = ImageTk.PhotoImage(img_add_receitas)
 
-botao_inserir_receitas = Button(frame_configuracao, image=img_add_receitas, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_receitas = Button(frame_configuracao, command=inserir_receitas_b, image=img_add_receitas, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
 botao_inserir_receitas.place(x=110, y=111)
 
 # Operação para nova categoria ---------------------------------------------------

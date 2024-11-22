@@ -269,4 +269,54 @@ img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
 botao_inserir_despesas = Button(frame_operacoes, image=img_add_despesas, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
 botao_inserir_despesas.place(x=110, y=131)
 
+# Botão para excluir
+l_excluir = Label(frame_operacoes, text="Excluir ação", height=1, anchor=NW, font=('Ivy 10 bold'), bg=co1, fg=co4)
+l_excluir.place(x=10, y=190)
+
+img_delete = Image.open('delete.png')
+img_delete = img_delete.resize((17, 17))
+img_delete = ImageTk.PhotoImage(img_delete)
+
+botao_deletar = Button(frame_operacoes, image=img_delete, text=" Deletar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_deletar.place(x=110, y=190)
+
+# Configurações das receitas ---------------------------------------------------
+l_info = Label(frame_configuracao, text="Insira novas receitas", height=1, anchor=NW, font=('Verdana 10 bold'), bg=co1, fg=co4)
+l_info.place(x=10, y=10)
+
+# Calendário
+l_cal_receitas = Label(frame_configuracao, text="Data", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_cal_receitas.place(x=10, y=40)
+e_cal_receitas = DateEntry(frame_configuracao, width=12, background='darkblue', foreground='white', borderwidth=2, year=2024)
+e_cal_receitas.place(x=110, y=41)
+
+# Valor
+l_valor_receitas = Label(frame_configuracao, text="Quantia total", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_valor_receitas.place(x=10, y=70)
+e_valor_receitas = Entry(frame_configuracao, width=14, justify='left', relief='solid')
+e_valor_receitas.place(x=110, y=71)
+
+# Botão para inserir
+img_add_receitas = Image.open('add.png')
+img_add_receitas = img_add_receitas.resize((17, 17))
+img_add_receitas = ImageTk.PhotoImage(img_add_receitas)
+
+botao_inserir_receitas = Button(frame_configuracao, image=img_add_receitas, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_receitas.place(x=110, y=111)
+
+# Operação para nova categoria ---------------------------------------------------
+l_info = Label(frame_configuracao, text="Categoria", height=1, anchor=NW, font=('Ivy 10 bold'), bg=co1, fg=co4)
+l_info.place(x=10, y=160)
+
+e_categoria = Entry(frame_configuracao, width=14, justify='left', relief='solid')
+e_categoria.place(x=110, y=160)
+
+# Botão para inserir
+img_add_categoria = Image.open('add.png')
+img_add_categoria = img_add_categoria.resize((17, 17))
+img_add_categoria = ImageTk.PhotoImage(img_add_categoria)
+
+botao_inserir_categoria = Button(frame_configuracao, image=img_add_categoria, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_categoria.place(x=110, y=190)
+
 janela.mainloop()

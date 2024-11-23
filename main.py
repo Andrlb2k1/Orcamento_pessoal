@@ -19,7 +19,7 @@ from tkcalendar import Calendar, DateEntry
 from datetime import date
 
 # Importando funções da view
-from view import bar_valores, inserir_categoria, ver_categoria, inserir_receita, inserir_gasto, tabela, deletar_gasto, deletar_receita
+from view import bar_valores, pie_valores, porcentagem_valor, inserir_categoria, ver_categoria, inserir_receita, inserir_gasto, tabela, deletar_gasto, deletar_receita
 
 # Cores
 co0 = "#2e2d2b"  # preta
@@ -188,7 +188,7 @@ def deletar_dados():
 
 # Porcentagem -----------------------------------------------------------
 def porcentagem():
-	l_nome = Label(frameMeio, text="Porcentagem da receita gasta", height=1, anchor=NW, font=('Verdana 12'), bg=co1, fg=co4)
+	l_nome = Label(frameMeio, text="Porcentagem da receita restante", height=1, anchor=NW, font=('Verdana 12'), bg=co1, fg=co4)
 	l_nome.place(x=7, y=5)
 
 	style = ttk.Style()
@@ -198,9 +198,9 @@ def porcentagem():
 
 	bar = Progressbar(frameMeio, length=180, style="black.Horizontal.TProgressbar")
 	bar.place(x=10, y=35)
-	bar['value'] = 50
+	bar['value'] = porcentagem_valor()[0]
 
-	valor = 50
+	valor = porcentagem_valor()[0]
 
 	l_porcentagem = Label(frameMeio, text="{:,.2f}%".format(valor), anchor=NW, font=('Verdana 12'), bg=co1, fg=co4)
 	l_porcentagem.place(x=200, y=35)
@@ -208,7 +208,7 @@ def porcentagem():
 # Função para gráfico de barras --------------------------------------------
 def grafico_bar():
 	lista_categorias = ['Renda', 'Despesas', 'Saldo']
-	lista_valores = [2000, 3000, 6236]
+	lista_valores = bar_valores()
 	
 	# Faça a figura e atribua objetos de eixo
 	figura = plt.Figure(figsize=(4, 3.45), dpi=60)
@@ -249,7 +249,7 @@ def grafico_bar():
 
 # Função de resumo total --------------------------------------------------------------
 def resumo():
-	valor = [500, 600, 420]
+	valor = bar_valores()
 
 	l_linha = Label(frameMeio, text="", width=215, height=1, anchor=NW, font=('Arial 1'), bg='#545454')
 	l_linha.place(x=309, y=52)
@@ -283,8 +283,8 @@ def grafico_pie():
     figura = plt.Figure(figsize=(5, 3), dpi=90)
     ax = figura.add_subplot(111)
 
-    lista_valores = [345,225,534]
-    lista_categorias = ['Renda', 'Despesa', 'Saldo']
+    lista_valores = pie_valores()[1]
+    lista_categorias = pie_valores()[0]
 
     # Only "explode" the 2nd slice (i.e. 'Hogs')
     explode = []

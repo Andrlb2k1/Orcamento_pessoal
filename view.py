@@ -1,6 +1,9 @@
 # Importando SQLite
 import sqlite3 as lite
 
+# Importando Pandas
+import pandas as pd
+
 # Criando conexão
 con = lite.connect('dados.db')
 
@@ -106,3 +109,63 @@ def bar_valores():
 
 	for i in receitas:
 		receitas_lista.append(i[3])
+
+	receita_total = sum(receitas_lista)
+
+	# Despesa total
+	gastos = ver_gastos()
+	gastos_lista = []
+
+	for i in gastos:
+		gastos_lista.append(i[3])
+
+	gasto_total = sum(gastos_lista)
+
+	# Saldo total
+	saldo_total = receita_total - gasto_total
+
+	return [receita_total, gasto_total, saldo_total]
+
+# Função para dados do gráfico pie
+def pie_valores():
+	gastos = ver_gastos()
+	tabela_lista = []
+
+	for i in gastos:
+		tabela_lista.append(i)
+
+	dataframe = pd.DataFrame(tabela_lista, columns=['id', 'categoria', 'data', 'valor'])
+	dataframe = dataframe.groupby('categoria')['valor'].sum()
+
+	lista_quantias = dataframe.values.tolist()
+	lista_categorias = []
+
+	for i in dataframe.index:
+		lista_categorias.append(i)
+	
+	return([lista_categorias, lista_quantias])
+
+# Função para dados de porcentagem
+def porcentagem_valor():
+	# Receita total
+	receitas = ver_receitas()
+	receitas_lista = []
+
+	for i in receitas:
+		receitas_lista.append(i[3])
+
+	receita_total = sum(receitas_lista)
+
+	# Despesa total
+	gastos = ver_gastos()
+	gastos_lista = []
+
+	for i in gastos:
+		gastos_lista.append(i[3])
+
+	gasto_total = sum(gastos_lista)
+
+	# Porcentagem total
+	total = ((receita_total - gasto_total) / receita_total) * 100
+
+	return [total]

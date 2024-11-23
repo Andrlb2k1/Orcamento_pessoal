@@ -19,7 +19,7 @@ from tkcalendar import Calendar, DateEntry
 from datetime import date
 
 # Importando funções da view
-from view import bar_valores, inserir_categoria, ver_categoria, inserir_receita, inserir_gasto, tabela
+from view import bar_valores, inserir_categoria, ver_categoria, inserir_receita, inserir_gasto, tabela, deletar_gasto, deletar_receita
 
 # Cores
 co0 = "#2e2d2b"  # preta
@@ -151,6 +151,40 @@ def inserir_despesas_b():
 	grafico_bar()
 	resumo()
 	grafico_pie()
+
+# Função para deletar --------------------------------------------------
+def deletar_dados():
+	try:
+		treev_dados = tree.focus()
+		treev_dicionario = tree.item(treev_dados)
+		treev_lista = treev_dicionario['values']
+		valor = treev_lista[0]
+		nome = treev_lista[1]
+
+		if nome == 'Receita':
+			deletar_receita([valor])
+			messagebox.showinfo('Sucesso', 'Os dados foram deletados com sucesso')
+
+			# Atualizando dados
+			mostrar_renda()
+			porcentagem()
+			grafico_bar()
+			resumo()
+			grafico_pie()
+		
+		else:
+			deletar_gasto([valor])
+			messagebox.showinfo('Sucesso', 'Os dados foram deletados com sucesso')
+
+			# Atualizando dados
+			mostrar_renda()
+			porcentagem()
+			grafico_bar()
+			resumo()
+			grafico_pie()
+
+	except IndexError:
+		messagebox.showerror('Erro', 'Selecione um dos dados na tabela')
 
 # Porcentagem -----------------------------------------------------------
 def porcentagem():
@@ -369,7 +403,7 @@ img_delete = Image.open('delete.png')
 img_delete = img_delete.resize((17, 17))
 img_delete = ImageTk.PhotoImage(img_delete)
 
-botao_deletar = Button(frame_operacoes, image=img_delete, text=" Deletar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_deletar = Button(frame_operacoes, command=deletar_dados, image=img_delete, text=" Deletar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
 botao_deletar.place(x=110, y=190)
 
 # Configurações das receitas ---------------------------------------------------

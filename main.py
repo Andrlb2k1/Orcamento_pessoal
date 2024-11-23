@@ -19,7 +19,7 @@ from tkcalendar import Calendar, DateEntry
 from datetime import date
 
 # Importando funções da view
-from view import bar_valores, inserir_categoria, ver_categoria, inserir_receita, inserir_gasto
+from view import bar_valores, inserir_categoria, ver_categoria, inserir_receita, inserir_gasto, tabela
 
 # Cores
 co0 = "#2e2d2b"  # preta
@@ -123,6 +123,35 @@ def inserir_receitas_b():
 	resumo()
 	grafico_pie()
 
+# Função para inserir despesas ------------------------------------------------
+def inserir_despesas_b():
+	nome = combo_categoria_despesas.get()
+	data = e_cal_despesas.get()
+	quantia = e_valor_despesas.get()
+
+	lista_inserir = [nome, data, quantia]
+
+	for i in lista_inserir:
+		if i == '':
+			messagebox.showerror('Erro', 'Preencha todos os campos')
+			return
+	
+	# Chamando a função inserir despesas presente na view
+	inserir_gasto(lista_inserir)
+
+	messagebox.showinfo('Sucesso', 'Os dados foram inseridos com sucesso')
+      
+	combo_categoria_despesas.delete(0, 'end')
+	e_cal_despesas.delete(0, 'end')
+	e_valor_despesas.delete(0, 'end')
+
+	# Atualizando dados
+	mostrar_renda()
+	porcentagem()
+	grafico_bar()
+	resumo()
+	grafico_pie()
+
 # Porcentagem -----------------------------------------------------------
 def porcentagem():
 	l_nome = Label(frameMeio, text="Porcentagem da receita gasta", height=1, anchor=NW, font=('Verdana 12'), bg=co1, fg=co4)
@@ -210,7 +239,7 @@ def resumo():
 	l_sumario.place(x=309, y=220)
 
 # Função gráfico pie -----------------------------------------------
-# Codigo usado para o gráfico de Pie:
+# Código usado para o gráfico de Pie:
 
 frame_gra_pie = Frame(frameMeio, width=580, height=250, bg=co2)
 frame_gra_pie.place(x=415, y=5)
@@ -261,7 +290,7 @@ def mostrar_renda():
     # Creating a treeview with dual scrollbars
     tabela_head = ['#Id','Categoria','Data','Quantia']
 
-    lista_itens = [[0,2,3,4],[0,2,3,4],[0,2,3,4],[0,2,3,4]]
+    lista_itens = tabela()
     
     global tree
 
@@ -302,7 +331,7 @@ l_categoria = Label(frame_operacoes, text="Categoria", height=1, anchor=NW, font
 l_categoria.place(x=10, y=40)
 
 # Pegando categorias
-categoria_funcao = ['Viagem', 'Comida']
+categoria_funcao = ver_categoria()
 categoria = []
 
 for i in categoria_funcao:
@@ -329,7 +358,7 @@ img_add_despesas = Image.open('add.png')
 img_add_despesas = img_add_despesas.resize((17, 17))
 img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
 
-botao_inserir_despesas = Button(frame_operacoes, image=img_add_despesas, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_despesas = Button(frame_operacoes, command=inserir_despesas_b, image=img_add_despesas, text=" Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
 botao_inserir_despesas.place(x=110, y=131)
 
 # Botão para excluir
